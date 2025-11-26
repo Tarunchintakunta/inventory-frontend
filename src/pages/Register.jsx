@@ -16,7 +16,8 @@ const Register = () => {
             await register(name, email, password);
             navigate('/login');
         } catch (err) {
-            setError('Registration failed. Email might be taken.');
+            console.error(err);
+            setError(err.response?.data?.detail || 'Registration failed. Please try again.');
         }
     };
 
@@ -30,7 +31,7 @@ const Register = () => {
                         <label className="block text-gray-700 mb-2">Name</label>
                         <input
                             type="text"
-                            className="w-full p-2 border rounded"
+                            className={`w-full p-2 border rounded ${error ? 'border-red-500' : 'border-gray-300'}`}
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                             required
@@ -40,7 +41,7 @@ const Register = () => {
                         <label className="block text-gray-700 mb-2">Email</label>
                         <input
                             type="email"
-                            className="w-full p-2 border rounded"
+                            className={`w-full p-2 border rounded ${error ? 'border-red-500' : 'border-gray-300'}`}
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required
@@ -50,7 +51,7 @@ const Register = () => {
                         <label className="block text-gray-700 mb-2">Password</label>
                         <input
                             type="password"
-                            className="w-full p-2 border rounded"
+                            className={`w-full p-2 border rounded ${error ? 'border-red-500' : 'border-gray-300'}`}
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
