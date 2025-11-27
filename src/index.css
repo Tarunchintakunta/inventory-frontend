@@ -1,72 +1,246 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Bootstrap CSS */
+@import 'bootstrap/dist/css/bootstrap.min.css';
 
+/* Custom Dark Theme Variables */
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --dark-bg: #0a0e1a;
+  --dark-surface: #0f172a;
+  --dark-surface-light: #1e293b;
+  --dark-border: #334155;
+  --dark-text: #e2e8f0;
+  --dark-text-muted: #94a3b8;
+  --primary-blue: #3b82f6;
+  --primary-blue-hover: #2563eb;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background: var(--dark-bg);
+  color: var(--dark-text);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+/* Override Bootstrap default text colors for dark theme */
+.text-dark:not(.badge) {
+  color: var(--dark-text) !important;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
+.text-black {
+  color: var(--dark-text) !important;
+}
+
+/* Ensure all default text is visible */
+p, span, div, h1, h2, h3, h4, h5, h6, label, small {
+  color: inherit;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--dark-surface);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-blue);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-blue-hover);
+}
+
+/* Override Bootstrap for dark theme */
+.bg-dark-custom {
+  background-color: var(--dark-bg) !important;
+}
+
+.bg-surface {
+  background-color: var(--dark-surface) !important;
+}
+
+.bg-surface-light {
+  background-color: var(--dark-surface-light) !important;
+}
+
+.border-custom {
+  border-color: var(--dark-border) !important;
+}
+
+.text-custom {
+  color: var(--dark-text) !important;
+}
+
+.text-muted-custom {
+  color: var(--dark-text-muted) !important;
+}
+
+/* Form controls dark theme */
+.form-control,
+.form-select {
+  background-color: var(--dark-surface-light) !important;
+  border-color: var(--dark-border) !important;
+  color: var(--dark-text) !important;
+}
+
+.form-control:focus,
+.form-select:focus {
+  background-color: var(--dark-surface-light) !important;
+  border-color: var(--primary-blue) !important;
+  color: var(--dark-text) !important;
+  box-shadow: 0 0 0 0.25rem rgba(59, 130, 246, 0.25) !important;
+}
+
+.form-control::placeholder {
+  color: var(--dark-text-muted) !important;
+  opacity: 0.6;
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: var(--primary-blue) !important;
+  border-color: var(--primary-blue) !important;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-blue-hover) !important;
+  border-color: var(--primary-blue-hover) !important;
+}
+
+/* Links */
+a {
+  color: var(--primary-blue);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+a:hover {
+  color: #60a5fa;
+}
+
+/* Tables */
+.table-dark-custom {
+  --bs-table-bg: var(--dark-surface);
+  --bs-table-border-color: var(--dark-border);
+  --bs-table-striped-bg: var(--dark-surface-light);
+  --bs-table-hover-bg: var(--dark-surface-light);
+  color: var(--dark-text);
+}
+
+/* Cards */
+.card-dark {
+  background-color: var(--dark-surface) !important;
+  border-color: var(--dark-border) !important;
+  color: var(--dark-text) !important;
+}
+
+/* Navbar */
+.navbar-toggler {
+  border-color: var(--dark-border) !important;
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(226, 232, 240, 0.85)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}
+
+.nav-link:hover {
+  color: var(--primary-blue) !important;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-in;
+}
+
+/* Card hover effects */
+.card-dark:hover {
+  transform: translateY(-2px);
+  transition: transform 0.2s ease;
+}
+
+/* Badge improvements */
+.badge {
   font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  padding: 0.35em 0.65em;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+/* Fix badge text-dark visibility in dark theme - only for warning badges */
+.badge.bg-warning.text-dark {
+  color: #000 !important;
+  background-color: #ffc107 !important;
+}
+
+/* All other badges should use light text */
+.badge:not(.bg-warning):not(.bg-success):not(.bg-primary):not(.bg-info):not(.bg-danger) {
+  color: var(--dark-text) !important;
+}
+
+.badge.bg-success {
+  color: #fff !important;
+  background-color: #198754 !important;
+}
+
+/* Table improvements */
+.table-dark-custom tbody tr:hover {
+  background-color: var(--dark-surface-light) !important;
+}
+
+/* Button improvements */
+.btn {
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Modal improvements */
+.modal-content {
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* Loading spinner */
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
   }
-  a:hover {
-    color: #747bff;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  button {
-    background-color: #f9f9f9;
-  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-out;
 }

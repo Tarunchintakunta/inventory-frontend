@@ -89,7 +89,7 @@ const Sales = () => {
             alert('Sale completed successfully!');
             setCart([]);
             setCustomerName('');
-            fetchProducts(); // Refresh stock
+            fetchProducts();
         } catch (error) {
             console.error('Error creating sale', error);
             alert('Failed to complete sale');
@@ -107,89 +107,100 @@ const Sales = () => {
 
     return (
         <Layout>
-            <div className="flex h-[calc(100vh-100px)]">
+            <div className="row g-3 fade-in" style={{ height: 'calc(100vh - 150px)' }}>
                 {/* Product Selection */}
-                <div className="w-2/3 pr-6 overflow-y-auto">
-                    <div className="mb-4">
+                <div className="col-lg-8" style={{ maxHeight: '100%', overflowY: 'auto' }}>
+                    <div className="mb-3">
                         <input
                             type="text"
+                            className="form-control"
                             placeholder="Search products..."
-                            className="w-full p-2 border rounded"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
                     </div>
-                    <div className="grid grid-cols-3 gap-4">
+                    <div className="row g-3">
                         {filteredProducts.map((product) => (
-                            <div
-                                key={product.id}
-                                className="bg-white p-4 rounded shadow cursor-pointer hover:shadow-md"
-                                onClick={() => addToCart(product)}
-                            >
-                                <h3 className="font-bold">{product.name}</h3>
-                                <p className="text-gray-600">${product.price}</p>
-                                <p className={`text-sm ${product.stock_quantity < 5 ? 'text-red-500' : 'text-green-500'}`}>
-                                    Stock: {product.stock_quantity}
-                                </p>
+                            <div key={product.id} className="col-md-4">
+                                <div
+                                    className="card card-dark border-custom cursor-pointer"
+                                    style={{ cursor: 'pointer' }}
+                                    onClick={() => addToCart(product)}
+                                >
+                                    <div className="card-body">
+                                        <h6 className="card-title text-custom mb-2">{product.name}</h6>
+                                        <p className="text-primary fw-bold mb-1">${product.price}</p>
+                                        <p className={`small mb-0 ${product.stock_quantity < 5 ? 'text-danger' : 'text-success'}`}>
+                                            Stock: {product.stock_quantity}
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
                         ))}
                     </div>
                 </div>
 
                 {/* Cart */}
-                <div className="w-1/3 bg-white p-6 rounded shadow flex flex-col">
-                    <h2 className="text-xl font-bold mb-4">Current Sale</h2>
-                    <div className="flex-1 overflow-y-auto">
-                        {cart.map((item) => (
-                            <div key={item.product_id} className="flex justify-between items-center mb-4 border-b pb-2">
-                                <div>
-                                    <h4 className="font-medium">{item.name}</h4>
-                                    <p className="text-sm text-gray-500">${item.price_at_sale} x {item.quantity}</p>
-                                </div>
-                                <div className="flex items-center">
-                                    <button
-                                        onClick={() => updateQuantity(item.product_id, item.quantity - 1)}
-                                        className="px-2 py-1 bg-gray-200 rounded"
-                                    >
-                                        -
-                                    </button>
-                                    <span className="mx-2">{item.quantity}</span>
-                                    <button
-                                        onClick={() => updateQuantity(item.product_id, item.quantity + 1)}
-                                        className="px-2 py-1 bg-gray-200 rounded"
-                                    >
-                                        +
-                                    </button>
-                                    <button
-                                        onClick={() => removeFromCart(item.product_id)}
-                                        className="ml-4 text-red-500"
-                                    >
-                                        x
-                                    </button>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                    <div className="mt-4 border-t pt-4">
-                        <div className="flex justify-between text-xl font-bold mb-4">
-                            <span>Total:</span>
-                            <span>${totalAmount.toFixed(2)}</span>
+                <div className="col-lg-4">
+                    <div className="card card-dark border-custom h-100 d-flex flex-column">
+                        <div className="card-header border-bottom border-custom">
+                            <h5 className="text-custom mb-0">Current Sale</h5>
                         </div>
-                        <input
-                            type="text"
-                            placeholder="Customer Name (Optional)"
-                            className="w-full p-2 border rounded mb-4"
-                            value={customerName}
-                            onChange={(e) => setCustomerName(e.target.value)}
-                        />
-                        <button
-                            onClick={handleCheckout}
-                            disabled={cart.length === 0}
-                            className={`w-full py-3 rounded text-white font-bold ${cart.length === 0 ? 'bg-gray-400' : 'bg-blue-600 hover:bg-blue-700'
-                                }`}
-                        >
-                            Complete Sale
-                        </button>
+                        <div className="card-body flex-grow-1 overflow-auto">
+                            {cart.length === 0 ? (
+                                <p className="text-muted-custom text-center mt-4">Cart is empty</p>
+                            ) : (
+                                cart.map((item) => (
+                                    <div key={item.product_id} className="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom border-custom">
+                                        <div>
+                                            <h6 className="text-custom mb-1">{item.name}</h6>
+                                            <p className="text-muted-custom small mb-0">${item.price_at_sale} x {item.quantity}</p>
+                                        </div>
+                                        <div className="d-flex align-items-center">
+                                            <button
+                                                className="btn btn-sm btn-outline-secondary me-2"
+                                                onClick={() => updateQuantity(item.product_id, item.quantity - 1)}
+                                            >
+                                                -
+                                            </button>
+                                            <span className="text-custom me-2">{item.quantity}</span>
+                                            <button
+                                                className="btn btn-sm btn-outline-secondary me-2"
+                                                onClick={() => updateQuantity(item.product_id, item.quantity + 1)}
+                                            >
+                                                +
+                                            </button>
+                                            <button
+                                                className="btn btn-sm btn-link text-danger p-0"
+                                                onClick={() => removeFromCart(item.product_id)}
+                                            >
+                                                ×
+                                            </button>
+                                        </div>
+                                    </div>
+                                ))
+                            )}
+                        </div>
+                        <div className="card-footer border-top border-custom">
+                            <div className="d-flex justify-content-between mb-3">
+                                <span className="text-custom fw-bold">Total:</span>
+                                <span className="text-primary fw-bold">${totalAmount.toFixed(2)}</span>
+                            </div>
+                            <input
+                                type="text"
+                                className="form-control mb-3"
+                                placeholder="Customer Name (Optional)"
+                                value={customerName}
+                                onChange={(e) => setCustomerName(e.target.value)}
+                            />
+                            <button
+                                className="btn btn-primary w-100"
+                                onClick={handleCheckout}
+                                disabled={cart.length === 0}
+                            >
+                                Complete Sale
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

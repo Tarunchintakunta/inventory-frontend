@@ -31,68 +31,81 @@ const AdminDashboard = () => {
 
     return (
         <Layout>
-            <h1 className="text-2xl font-bold mb-6">Admin Dashboard</h1>
+            <h1 className="text-custom mb-4 fade-in">Admin Dashboard</h1>
 
             {/* Analytics */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                <div className="bg-white p-6 rounded shadow">
-                    <h3 className="text-gray-500 text-sm font-medium uppercase">Total Sales Revenue</h3>
-                    <p className="text-3xl font-bold text-gray-900 mt-2">${analytics.total_sales.toFixed(2)}</p>
+            <div className="row g-3 mb-4">
+                <div className="col-md-6">
+                    <div className="card card-dark border-custom">
+                        <div className="card-body">
+                            <h6 className="text-primary text-uppercase small mb-2">Total Sales Revenue</h6>
+                            <h3 className="text-custom mb-0">${analytics.total_sales.toFixed(2)}</h3>
+                        </div>
+                    </div>
                 </div>
-                <div className="bg-white p-6 rounded shadow">
-                    <h3 className="text-gray-500 text-sm font-medium uppercase">Total Transactions</h3>
-                    <p className="text-3xl font-bold text-gray-900 mt-2">{analytics.count}</p>
+                <div className="col-md-6">
+                    <div className="card card-dark border-custom">
+                        <div className="card-body">
+                            <h6 className="text-primary text-uppercase small mb-2">Total Transactions</h6>
+                            <h3 className="text-custom mb-0">{analytics.count}</h3>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="row g-4">
                 {/* Recent Sales */}
-                <div className="bg-white shadow rounded-lg overflow-hidden">
-                    <div className="px-6 py-4 border-b border-gray-200">
-                        <h3 className="text-lg font-medium text-gray-900">Recent Sales</h3>
+                <div className="col-lg-6">
+                    <div className="card card-dark border-custom fade-in">
+                        <div className="card-header border-bottom border-custom">
+                            <h5 className="text-custom mb-0">Recent Sales</h5>
+                        </div>
+                        <div className="card-body p-0" style={{ maxHeight: '400px', overflowY: 'auto' }}>
+                            <ul className="list-group list-group-flush">
+                                {sales.map((sale) => (
+                                    <li key={sale.id} className="list-group-item bg-surface border-custom">
+                                        <div className="d-flex justify-content-between align-items-start">
+                                            <div>
+                                                <p className="mb-1 text-custom fw-medium">
+                                                    {sale.customer_name || 'Walk-in Customer'}
+                                                </p>
+                                                <p className="mb-0 text-muted-custom small">
+                                                    {new Date(sale.created_at).toLocaleDateString()}
+                                                </p>
+                                            </div>
+                                            <div className="text-end">
+                                                <p className="mb-1 text-custom fw-bold">${sale.total_amount.toFixed(2)}</p>
+                                                <span className={`badge ${sale.status === 'completed' ? 'bg-success' : 'bg-danger'}`}>
+                                                    {sale.status}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
                     </div>
-                    <ul className="divide-y divide-gray-200 max-h-96 overflow-y-auto">
-                        {sales.map((sale) => (
-                            <li key={sale.id} className="px-6 py-4">
-                                <div className="flex justify-between">
-                                    <div>
-                                        <p className="text-sm font-medium text-gray-900">
-                                            {sale.customer_name || 'Walk-in Customer'}
-                                        </p>
-                                        <p className="text-sm text-gray-500">
-                                            {new Date(sale.created_at).toLocaleDateString()}
-                                        </p>
-                                    </div>
-                                    <div className="text-right">
-                                        <p className="text-sm font-bold text-gray-900">${sale.total_amount.toFixed(2)}</p>
-                                        <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${sale.status === 'completed' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-                                            }`}>
-                                            {sale.status}
-                                        </span>
-                                    </div>
-                                </div>
-                            </li>
-                        ))}
-                    </ul>
                 </div>
 
                 {/* Customers */}
-                <div className="bg-white shadow rounded-lg overflow-hidden">
-                    <div className="px-6 py-4 border-b border-gray-200">
-                        <h3 className="text-lg font-medium text-gray-900">Customers</h3>
+                <div className="col-lg-6">
+                    <div className="card card-dark border-custom fade-in">
+                        <div className="card-header border-bottom border-custom">
+                            <h5 className="text-custom mb-0">Customers</h5>
+                        </div>
+                        <div className="card-body p-0" style={{ maxHeight: '400px', overflowY: 'auto' }}>
+                            <ul className="list-group list-group-flush">
+                                {customers.map((customer) => (
+                                    <li key={customer.id} className="list-group-item bg-surface border-custom">
+                                        <div>
+                                            <p className="mb-1 text-custom fw-medium">{customer.name}</p>
+                                            <p className="mb-0 text-muted-custom small">{customer.email}</p>
+                                        </div>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
                     </div>
-                    <ul className="divide-y divide-gray-200 max-h-96 overflow-y-auto">
-                        {customers.map((customer) => (
-                            <li key={customer.id} className="px-6 py-4">
-                                <div className="flex items-center justify-between">
-                                    <div>
-                                        <p className="text-sm font-medium text-gray-900">{customer.name}</p>
-                                        <p className="text-sm text-gray-500">{customer.email}</p>
-                                    </div>
-                                </div>
-                            </li>
-                        ))}
-                    </ul>
                 </div>
             </div>
         </Layout>
