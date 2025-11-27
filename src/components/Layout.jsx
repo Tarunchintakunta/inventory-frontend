@@ -12,36 +12,40 @@ const Layout = ({ children }) => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50">
-            <nav className="bg-white shadow-sm">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between h-16">
-                        <div className="flex">
-                            <Link to="/" className="flex-shrink-0 flex items-center font-bold text-xl text-blue-600">
-                                Inventory System
-                            </Link>
-                            <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
-                                <Link to="/" className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
-                                    Dashboard
-                                </Link>
-                                <Link to="/products" className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
-                                    Products
-                                </Link>
-                                <Link to="/sales" className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
-                                    Sales
-                                </Link>
-                                {user?.role === 'admin' && (
-                                    <Link to="/admin" className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
-                                        Admin
-                                    </Link>
-                                )}
-                            </div>
-                        </div>
-                        <div className="flex items-center">
-                            <span className="text-gray-700 mr-4">Welcome, {user?.name}</span>
+        <div className="min-vh-100 bg-dark-custom">
+            <nav className="navbar navbar-expand-lg bg-surface border-bottom border-custom shadow">
+                <div className="container-fluid">
+                    <Link to="/" className="navbar-brand text-primary fw-bold">
+                        Inventory System
+                    </Link>
+                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span className="navbar-toggler-icon"></span>
+                    </button>
+                    <div className="collapse navbar-collapse" id="navbarNav">
+                        <ul className="navbar-nav me-auto">
+                            <li className="nav-item">
+                                <Link to="/" className="nav-link text-muted-custom">Dashboard</Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link to="/products" className="nav-link text-muted-custom">Products</Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link to="/sales" className="nav-link text-muted-custom">Sales</Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link to="/reports" className="nav-link text-muted-custom">Reports</Link>
+                            </li>
+                            {user?.role === 'admin' && (
+                                <li className="nav-item">
+                                    <Link to="/admin" className="nav-link text-muted-custom">Admin</Link>
+                                </li>
+                            )}
+                        </ul>
+                        <div className="d-flex align-items-center">
+                            <span className="text-custom me-3">Welcome, {user?.name}</span>
                             <button
                                 onClick={handleLogout}
-                                className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 text-sm"
+                                className="btn btn-danger btn-sm"
                             >
                                 Logout
                             </button>
@@ -49,7 +53,7 @@ const Layout = ({ children }) => {
                     </div>
                 </div>
             </nav>
-            <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+            <main className="container-fluid py-4">
                 {children}
             </main>
         </div>

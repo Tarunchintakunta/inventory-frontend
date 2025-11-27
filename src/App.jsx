@@ -5,6 +5,7 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import ProductList from './pages/ProductList';
 import Sales from './pages/Sales';
+import Reports from './pages/Reports';
 import AdminDashboard from './pages/AdminDashboard';
 import ProtectedRoute from './components/ProtectedRoute';
 
@@ -18,6 +19,7 @@ function App() {
         <Route path="/" element={<Dashboard />} />
         <Route path="/products" element={<ProductList />} />
         <Route path="/sales" element={<Sales />} />
+        <Route path="/reports" element={<Reports />} />
       </Route>
 
       <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
