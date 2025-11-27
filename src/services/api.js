@@ -11,10 +11,9 @@ const api = axios.create({
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response && error.response.status === 401) {
-      // Handle unauthorized access (e.g., redirect to login)
-      window.location.href = '/login';
-    }
+    // Don't redirect from interceptor - let React Router and AuthContext handle navigation
+    // The interceptor should only reject the promise
+    // ProtectedRoute and AuthContext will handle redirects appropriately
     return Promise.reject(error);
   }
 );
